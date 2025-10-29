@@ -1,21 +1,41 @@
-import React from "react";
-import Table from "../Components/Table";
+"use client"
 
-export default function page() {
-  const data = [
-    {
-      nama: "Laporan Keuangan Q1 2024",
-      tahun: "2024",
-      deskripsi: "-",
-      action: "Lihat Detail",
-    },
-    {
-      nama: "Laporan Keuangan Q1 2024",
-      tahun: "2024",
-      deskripsi: "-",
-      action: "Lihat Detail",
-    },
-  ];
+import React, { useEffect, useState } from "react";
+import Table from "../Components/Table";
+import FinancialService from "../Service/FinancialService";
+
+export default function Page() {
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const handleOpenFile = (fileUrl) => {
+    window.open(fileUrl, '_blank');
+  };
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const response = await FinancialService.fetchFinanceReport(1, 10);
+        const transformedData = response.data.map(report => ({
+          nama: report.title,
+          tahun: report.year.toString(),
+          deskripsi: report.description,
+          action: {
+            text: "Lihat Detail",
+            onClick: () => handleOpenFile(report.file)
+          },
+          file: report.file
+        }));
+        setReports(transformedData);
+      } catch (error) {
+        console.error("Error fetching reports:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReports();
+  }, []);
 
   const columns = [
     { header: "Nama Laporan", key: "nama" },
@@ -27,10 +47,11 @@ export default function page() {
   return (
     <Table
       title="Laporan Keuangan"
-      subtitle="Inventaris · 24 Data · Aset Desa"
+      subtitle={`Inventaris · ${reports.length} Data · Aset Desa`}
       searchPlaceholder="Cari laporan keuangan..."
-      data={data}
+      data={reports}
       columns={columns}
+      loading={loading}
     />
   );
 }

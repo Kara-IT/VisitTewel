@@ -57,7 +57,12 @@ export default function Table({
                       }`}
                     >
                       {column.key === "action" ? (
-                        <a href="#">{row[column.key]}</a>
+                        <button
+                          onClick={row[column.key].onClick}
+                          className="text-primary hover:underline cursor-pointer"
+                        >
+                          {row[column.key].text}
+                        </button>
                       ) : column.key === "deskripsi" ||
                         column.key === "keterangan" ? (
                         <div className="truncate" title={row[column.key]}>

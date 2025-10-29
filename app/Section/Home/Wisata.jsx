@@ -1,38 +1,22 @@
 "use client";
-import React from "react";
-import Card from "../../Components/Card";
+import React, { useEffect, useState } from "react";
+import Card from "../../Components/Card2";
 import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react";
+import { getVillageInfos } from "@/app/Service/TourismService";
+import Link from "next/link";
 
 export default function Wisata() {
-  const wisataData = [
-    {
-      id: 1,
-      image:
-        "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=500",
-      category: "PANTAI",
-      title: "Pantai Ketewel yang Menawan",
-    },
-    {
-      id: 2,
-      image:
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500",
-      category: "BUDAYA",
-      title: "Pura Tradisional Ketewel",
-    },
-    {
-      id: 3,
-      image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=500",
-      category: "KULINER",
-      title: "Kuliner Tradisional Bali",
-    },
-    {
-      id: 4,
-      image:
-        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=500",
-      category: "ALAM",
-      title: "Pemandangan Sawah Terasering",
-    },
-  ];
+  const [wisataData, setWisataData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getVillageInfos(1, 4);
+      if (data?.data) {
+        setWisataData(data.data);
+      }
+    };
+    fetchData();
+  }, []);
 
   const scrollCarousel = (direction) => {
     const carousel = document.getElementById("carousel");
@@ -75,15 +59,23 @@ export default function Wisata() {
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {wisataData.map((item) => (
-            <div key={item.id} className="flex-shrink-0 w-[560px]">
-              <Card {...item} />
-            </div>
+            <Link
+              key={item.id}
+              href={`/wisata/${item.id}`}
+              className="flex-shrink-0 w-[560px]"
+            >
+              <Card
+                image={item.tourism_image}
+                category={item.category}
+                title={item.title}
+              />
+            </Link>
           ))}
         </div>
         <div className="text-center lg:text-end mt-6">
-          <button className="text-primary">
+          <Link href="/wisata" className="text-primary">
             Lihat Semua <MoveRight className="size-4 ml-1 inline-block" />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

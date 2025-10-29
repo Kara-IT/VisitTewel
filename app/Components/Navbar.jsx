@@ -29,19 +29,19 @@ export default function Navbar() {
     },
     {
       title: "Pariwisata",
-      items: [{ title: "Objek Wisata", href: "/pariwisata/objek-wisata" }],
+      items: [{ title: "Objek Wisata", href: "/wisata" }],
     },
     {
       title: "Layanan Informasi",
       items: [
         { title: "Regulasi Desa Adat", href: "/Regulasi-Desa" },
-        { title: "Berita", href: "/layanan-informasi/berita" },
-        { title: "Pengumuman", href: "/layanan-informasi/pengumuman" },
+        { title: "Berita", href: "/Blog" },
+        { title: "Pengumuman", href: "/Blog" },
         {
           title: "Perpustakaan Digital",
           href: "/layanan-informasi/perpustakaan-digital",
         },
-        { title: "Prestasi", href: "/layanan-informasi/prestasi" },
+        { title: "Prestasi", href: "/Prestasi" },
         { title: "BUBDA", href: "/layanan-informasi/bubda" },
       ],
     },
@@ -54,9 +54,9 @@ export default function Navbar() {
       <div className="drawer-content">
         <nav className="h-18 fixed bg-white border-b border-b-base-300 w-full z-50 flex items-center">
           <div className="container mx-auto flex justify-between items-center px-4">
-            <div>
+            <a href="/">
               <Image src="/logo.svg" alt="Logo" width={48} height={48} />
-            </div>
+            </a>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:block">
