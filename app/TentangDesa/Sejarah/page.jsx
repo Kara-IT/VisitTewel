@@ -1,7 +1,7 @@
 export default function page() {
   return (
     <div className="min-h-screen">
-      <div className="mt-16 pb-8 lg:mt-40 container mx-auto px-3 sm:px-4 lg:px-10 text-justify">
+      <div className="mt-24 pb-8 lg:mt-40 container mx-auto px-3 sm:px-4 lg:px-10 text-justify">
         <h1 className="text-xl sm:text-2xl lg:text-4xl text-primary font-semibold text-center">
           Sejarah Desa Adat Ketewel
         </h1>

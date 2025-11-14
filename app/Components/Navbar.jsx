@@ -1,8 +1,19 @@
+"use client";
+
 import { ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
 
 export default function Navbar() {
+  const drawerToggleRef = useRef(null);
+
+  const closeDrawer = () => {
+    if (drawerToggleRef.current) {
+      drawerToggleRef.current.checked = false;
+    }
+  };
+
   const navItems = [
     {
       title: "Tentang Desa",
@@ -49,7 +60,12 @@ export default function Navbar() {
 
   return (
     <div className="drawer">
-      <input id="mobile-drawer" type="checkbox" className="drawer-toggle" />
+      <input
+        ref={drawerToggleRef}
+        id="mobile-drawer"
+        type="checkbox"
+        className="drawer-toggle"
+      />
 
       <div className="drawer-content">
         <nav className="h-18 fixed bg-white border-b border-b-base-300 w-full z-50 flex items-center">
@@ -132,6 +148,7 @@ export default function Navbar() {
                           <Link
                             className="block py-2 text-sm text-gray-500 hover:text-primary hover:bg-gray-50 rounded"
                             href={item.href}
+                            onClick={closeDrawer}
                           >
                             {item.title}
                           </Link>
