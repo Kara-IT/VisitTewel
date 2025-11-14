@@ -36,7 +36,7 @@ export default function WisataList() {
   }, [page]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <div className="mt-28 pb-16 lg:mt-40 container mx-auto px-4 lg:px-10">
         {/* Header */}
         <div className="mb-12">

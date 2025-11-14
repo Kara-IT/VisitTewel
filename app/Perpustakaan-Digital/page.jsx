@@ -56,7 +56,7 @@ export default function PerpustakaanDigital() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <div className="mt-28 pb-16 lg:mt-40 container mx-auto px-4 lg:px-10">
         {/* Header */}
         <div className="mb-12">
@@ -68,7 +68,7 @@ export default function PerpustakaanDigital() {
           </p>
         </div>
 
-        {/* Search Bar */}
+        {/* Search Bar
         <form onSubmit={handleSearch} className="mb-12">
           <div className="flex gap-2">
             <input
@@ -85,7 +85,7 @@ export default function PerpustakaanDigital() {
               Cari
             </button>
           </div>
-        </form>
+        </form> */}
 
         {/* Loading State */}
         {loading ? (
