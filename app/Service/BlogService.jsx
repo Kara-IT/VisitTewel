@@ -3,8 +3,12 @@ const BaseURL = process.env.NEXT_PUBLIC_API_URL;
 
 const BlogService = {
 
-// fetch all blogs
-    async fetchBlogs(page, pageSize) {
+// fetch all blogs or by type
+    async fetchBlogs(page, pageSize, type) {
+    if (type) {
+      const response = await axios.get(`${BaseURL}/blogs/public?page=${page}&page_size=${pageSize}&type=${type}`);
+      return response.data;
+    }
     const response = await axios.get(`${BaseURL}/blogs/public?page=${page}&page_size=${pageSize}`);
     return response.data;
   },

@@ -15,7 +15,7 @@ export const getVillageInfos = async (page = 1, pageSize = 10) => {
 
 export const getVillageInfoById = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}/village_infos/${id}`);
+    const response = await fetch(`${BASE_URL}/village_infos/public/${id}`);
     return await response.json();
   } catch (error) {
     console.error('Error fetching village info:', error);

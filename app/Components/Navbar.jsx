@@ -14,7 +14,7 @@ export default function Navbar() {
     },
     {
       title: "Keagamaan",
-      items: [{ title: "Pura", href: "/keagamaan/pura" }],
+      items: [{ title: "Pura", href: "/Pura" }],
     },
     {
       title: "Keuangan & Laporan",
@@ -39,7 +39,7 @@ export default function Navbar() {
         { title: "Pengumuman", href: "/Blog" },
         {
           title: "Perpustakaan Digital",
-          href: "/layanan-informasi/perpustakaan-digital",
+          href: "/Perpustakaan-Digital",
         },
         { title: "Prestasi", href: "/Prestasi" },
         { title: "BUBDA", href: "/layanan-informasi/bubda" },

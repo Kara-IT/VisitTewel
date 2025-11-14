@@ -12,7 +12,14 @@ export default function Wisata() {
     const fetchData = async () => {
       const data = await getVillageInfos(1, 4);
       if (data?.data) {
-        setWisataData(data.data);
+        // Filter data: jika category religi, hanya tampilkan yang tourism_valid true
+        const filteredData = data.data.filter((item) => {
+          if (item.category?.toLowerCase() === "religi") {
+            return item.tourism_valid === true;
+          }
+          return true;
+        });
+        setWisataData(filteredData);
       }
     };
     fetchData();

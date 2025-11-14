@@ -10,13 +10,20 @@ export default function Tab() {
   const [activeTab, setActiveTab] = useState("Semua");
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(activeTab);
+  }, [activeTab]);
 
-  async function fetchData() {
+  async function fetchData(tabType) {
     try {
-      const response = await BlogService.fetchBlogs(1, 10);
-      console.log(response)
+      let response;
+      if (tabType === "Semua") {
+        response = await BlogService.fetchBlogs(1, 8);
+      } else if (tabType === "Berita") {
+        response = await BlogService.fetchBlogs(1, 8, "berita");
+      } else if (tabType === "Pengumuman") {
+        response = await BlogService.fetchBlogs(1, 8, "pengumuman");
+      }
+      console.log(response);
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
@@ -35,8 +42,8 @@ export default function Tab() {
           onChange={() => setActiveTab("Semua")}
         />
         <div className="tab-content border-t border-t-base-300 pt-10">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {blogs.map((blog) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {blogs.slice(0, 8).map((blog) => (
               <Card key={blog.id} id={blog.id} coverImage={blog.coverImage} title={blog.title} type={blog.type} />
             ))}
           </div>
@@ -55,7 +62,16 @@ export default function Tab() {
           onChange={() => setActiveTab("Berita")}
         />
         <div className="tab-content border-t border-t-base-300 bg-base-100 py-10">
-          Berita Terbaru
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {blogs.slice(0, 8).map((blog) => (
+              <Card key={blog.id} id={blog.id} coverImage={blog.coverImage} title={blog.title} type={blog.type} />
+            ))}
+          </div>
+          <div className="mt-8 text-center lg:text-end">
+            <button className="text-primary">
+              Lihat Semua <MoveRight className="inline-block size-4 ml-1" />
+            </button>
+          </div>
         </div>
 
         <input
@@ -66,7 +82,16 @@ export default function Tab() {
           onChange={() => setActiveTab("Pengumuman")}
         />
         <div className="tab-content border-t border-t-base-300 bg-base-100 py-10">
-          Pengumuman
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {blogs.slice(0, 8).map((blog) => (
+              <Card key={blog.id} id={blog.id} coverImage={blog.coverImage} title={blog.title} type={blog.type} />
+            ))}
+          </div>
+          <div className="mt-8 text-center lg:text-end">
+            <button className="text-primary">
+              Lihat Semua <MoveRight className="inline-block size-4 ml-1" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,14 +1,14 @@
 export default function page() {
   return (
     <div className="min-h-screen">
-      <div className="mt-28 pb-10 lg:mt-40 container mx-auto px-4 lg:px-10 text-justify">
-        <h1 className="text-2xl lg:text-4xl text-primary font-semibold text-center">
+      <div className="mt-16 pb-8 lg:mt-40 container mx-auto px-3 sm:px-4 lg:px-10 text-justify">
+        <h1 className="text-xl sm:text-2xl lg:text-4xl text-primary font-semibold text-center">
           Sejarah Desa Adat Ketewel
         </h1>
-        <p className="text-center text-gray-500 text-lg">
+        <p className="text-center text-gray-500 text-sm sm:text-base lg:text-lg">
           Gema Suci dari Hutan Alas Jerem
         </p>
-        <div className="mt-8 text-gray-600">
+        <div className="mt-6 sm:mt-8 text-gray-600 text-sm sm:text-base">
           <p className="text-center italic">
             Di pesisir tenggara Pulau Bali, terhampar sebuah desa bernama
             Ketewel. Namun, jauh sebelum menjadi pemukiman yang hidup, wilayah
@@ -21,11 +21,11 @@ export default function page() {
         </div>
         <div>
           <section>
-            <div className="mt-20 text-gray-600">
-              <h1 className="font-medium text-2xl border-b pb-4 border-gray-300">
+            <div className="mt-12 sm:mt-20 text-gray-600 text-sm sm:text-base">
+              <h1 className="font-medium text-lg sm:text-2xl border-b pb-3 sm:pb-4 border-gray-300">
                 Turunnya Sang Hyang Pasupati dan Lahirnya Payogan Agung
               </h1>
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Alkisah, jagat Bali pernah berada dalam kegelapan. Seorang
                 entitas bernama I Kala Sunya, yang bersemayam di tengah samudra,
                 menebar kekacauan, penyakit, dan malapetaka ke seluruh pulau.
@@ -37,7 +37,7 @@ export default function page() {
                 I Kala Sunya. Pertarungan berlangsung sengit, namun kekuatan
                 para dewa belum mampu menandingi I Kala Sunya.
               </p>
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Akhirnya, Ida Hyang Pasupati melakukan ritual penyucian agung.
                 Dengan kekuatan sucinya, batu menjadi kayu bakar dan air laut
                 menjadi minyak, menciptakan api raksasa yang panasnya luar
@@ -54,11 +54,11 @@ export default function page() {
           </section>
 
           <section>
-            <div className="mt-14 text-gray-600">
-              <h1 className="font-medium text-2xl border-b pb-4 border-gray-300">
+            <div className="mt-10 sm:mt-14 text-gray-600 text-sm sm:text-base">
+              <h1 className="font-medium text-lg sm:text-2xl border-b pb-3 sm:pb-4 border-gray-300">
                 Sang Penjaga Pertama dan Tragedi Berdarah
               </h1>
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Setelah pura berdiri, Alas Jerem masih sunyi tanpa penghuni
                 manusia, tanpa ada yang menjalankan upacara. Takdir kemudian
                 memanggil <strong>Made Pasek</strong>, putra seorang abdi suci
@@ -69,7 +69,7 @@ export default function page() {
                 diubah dari klan Pasek menjadi <strong>Wangsa Dukuh</strong>{" "}
                 dengan gelar <strong>Dukuh Murti</strong> atau Dukuh Sakti.
               </p>
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Suatu ketika, Dalem Gelgel beserta 300 pengikutnya berkunjung.
                 Dukuh Murti mengingatkan sang raja untuk bersembahyang di
                 Pelinggih Madhurgama agar terhindar dari bencana. Namun, Dalem
@@ -85,25 +85,25 @@ export default function page() {
           </section>
 
           <section>
-            <div className="mt-14 text-gray-600">
-              <h1 className="font-medium text-2xl border-b pb-4 border-gray-300">
+            <div className="mt-10 sm:mt-14 text-gray-600 text-sm sm:text-base">
+              <h1 className="font-medium text-lg sm:text-2xl border-b pb-3 sm:pb-4 border-gray-300">
                 Kelahiran dari Pohon Nangka dan Asal-Usul Nama Ketewel
               </h1>
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Putra Dukuh Murti, Dukuh Centing, menerima kabar kematian
                 ayahnya melalui sebuah penglihatan. Saat kembali ke Alas Jerem,
                 ia terkejut melihat dua pohon nangka raksasa kembar yang tumbuh
                 secara misterius. Tiba-tiba, ia mendengar suara gaib dari Hyang
                 Pasupati:
               </p>
-              <p className="mt-4 italic border-s-3 ps-4 font-light border-amber-400">
+              <p className="mt-3 sm:mt-4 italic border-s-3 ps-3 sm:ps-4 font-light border-amber-400 text-xs sm:text-sm">
                 "Wahai Centing, janganlah engkau takut. Aku perintahkan kau
                 untuk membelah pohon nangka itu. Di dalamnya akan muncul dua
                 bayi, laki-laki dan perempuan. Angkatlah mereka sebagai anakmu.
                 Kelak, dari merekalah akan lahir garis keturunan mulia Prawangsa
                 Ketewel, karena mereka muncul dari pohon Nangka."{" "}
               </p>
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Dukuh Centing mematuhi perintah itu. Kedua bayi, yang diyakini
                 sebagai reinkarnasi Dukuh Murti dan istrinya, diberi nama Gede
                 Mawa (Gede Ketewel) dan Mawitsari. Untuk mengenang peristiwa
@@ -114,11 +114,11 @@ export default function page() {
           </section>
 
           <section>
-            <div className="mt-14 text-gray-600">
-              <h1 className="font-medium text-2xl border-b pb-4 border-gray-300">
+            <div className="mt-10 sm:mt-14 text-gray-600 text-sm sm:text-base">
+              <h1 className="font-medium text-lg sm:text-2xl border-b pb-3 sm:pb-4 border-gray-300">
                 Pasang Surut Kerajaan dan Kemegahan Giri Jagat Natha
               </h1>
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Seiring waktu, Ketewel berada di bawah pengaruh
                 kerajaan-kerajaan besar di Bali. Pada masa kekuasaan Mengwi,
                 seorang pemimpin bijaksana bernama Gusti Agung Maruta
@@ -128,7 +128,7 @@ export default function page() {
                 Ida Bhatara Hyang Putra Jaya. Di masanya, rakyat hidup makmur.
               </p>
 
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Namun, setelah ia wafat, penggantinya yang abai pada ritual suci
                 membuat desa dilanda bencana. Kedua meru runtuh diterpa angin
                 kencang dan wabah penyakit menyebar. Keseimbangan baru pulih
@@ -142,18 +142,18 @@ export default function page() {
           </section>
 
           <section>
-            <div className="mt-14 text-gray-600">
-              <h1 className="font-medium text-2xl border-b pb-4 border-gray-300">
+            <div className="mt-10 sm:mt-14 text-gray-600 text-sm sm:text-base">
+              <h1 className="font-medium text-lg sm:text-2xl border-b pb-3 sm:pb-4 border-gray-300">
                 Warisan Budaya Sakral—Topeng Ratu Dedari dan Ratu Lanang
               </h1>
-              <p className="mt-4 italic">
+              <p className="mt-3 sm:mt-4 italic">
                 Ketewel adalah rumah bagi dua set topeng sakral yang sangat
                 dihormati.
               </p>
 
-              <div className="mt-4 text-gray-600">
-                <h1 className="text-xl font-semibold">Topeng Ratu Dedari</h1>
-                <p className="mt-2">
+              <div className="mt-3 sm:mt-4 text-gray-600">
+                <h1 className="text-base sm:text-xl font-semibold">Topeng Ratu Dedari</h1>
+                <p className="mt-2 text-sm sm:text-base">
                   Dipercaya dibuat oleh Ki Lampor dari Kerajaan Daha/Jawi atas
                   perintah suci dari Hyang Pasupati. Tujuh topeng utama dibuat
                   dari kayu suci Gunung Semeru, "dihidupkan" melalui ritual
@@ -162,9 +162,9 @@ export default function page() {
                   berfungsi sebagai penolak bala (penampep).
                 </p>
               </div>
-              <div className="mt-4 text-gray-600">
-                <h1 className="text-xl font-semibold">Topeng Ratu Lanang</h1>
-                <p className="mt-2">
+              <div className="mt-3 sm:mt-4 text-gray-600">
+                <h1 className="text-base sm:text-xl font-semibold">Topeng Ratu Lanang</h1>
+                <p className="mt-2 text-sm sm:text-base">
                   Dibuat atas perintah Hyang Pasupati kepada Ida Bhatara Gana
                   untuk meniru wajah para raja dan menteri Kerajaan Majapahit.
                   Ke-13 topeng ini hanya ditarikan saat upacara besar seperti
@@ -176,11 +176,11 @@ export default function page() {
           </section>
 
           <section>
-            <div className="mt-14 text-gray-600">
-              <h1 className="font-medium text-2xl border-b pb-4 border-gray-300">
+            <div className="mt-10 sm:mt-14 text-gray-600 text-sm sm:text-base">
+              <h1 className="font-medium text-lg sm:text-2xl border-b pb-3 sm:pb-4 border-gray-300">
                 Gema Masa Lalu dalam Batu—Jejak Purbakala
               </h1>
-              <p className="mt-4">
+              <p className="mt-3 sm:mt-4">
                 Kisah-kisah agung Ketewel tidak hanya hidup dalam lontar dan
                 ingatan, tetapi juga terukir abadi di dalam batu. Kawasan Pura
                 Payogan Agung adalah sebuah situs arkeologi yang kaya. Di sini
@@ -197,11 +197,11 @@ export default function page() {
             </div>
           </section>
 
-          <div className="mt-20 text-gray-600">
-            <h1 className="text-2xl font-medium text-center">
+          <div className="mt-12 sm:mt-20 text-gray-600">
+            <h1 className="text-lg sm:text-2xl font-medium text-center">
               Menjaga Api Keseimbangan
             </h1>
-            <p className="text-center italic mt-4">
+            <p className="text-center italic mt-3 sm:mt-4 text-sm sm:text-base">
               Dari sebuah hutan angker, Ketewel telah bertransformasi menjadi
               desa penjaga spiritual. Setiap upacara yang digelar, setiap tarian
               sakral yang dipentaskan, adalah cara masyarakat Ketewel untuk
