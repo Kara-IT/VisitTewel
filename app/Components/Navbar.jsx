@@ -20,7 +20,7 @@ export default function Navbar() {
       items: [
         { title: "Sejarah Desa", href: "/TentangDesa/Sejarah" },
         { title: "Demografi", href: "/TentangDesa/Demografi" },
-        { title: "Struktur Prajuru", href: "/tentang-desa/struktur" },
+        { title: "Struktur Prajuru", href: "/TentangDesa/Struktur-Prajuru" },
       ],
     },
     {

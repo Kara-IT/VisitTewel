@@ -196,22 +196,6 @@ export default function page() {
               </p>
             </div>
           </section>
-
-          <div className="mt-12 sm:mt-20 text-gray-600">
-            <h1 className="text-lg sm:text-2xl font-medium text-center">
-              Menjaga Api Keseimbangan
-            </h1>
-            <p className="text-center italic mt-3 sm:mt-4 text-sm sm:text-base">
-              Dari sebuah hutan angker, Ketewel telah bertransformasi menjadi
-              desa penjaga spiritual. Setiap upacara yang digelar, setiap tarian
-              sakral yang dipentaskan, adalah cara masyarakat Ketewel untuk
-              terus menghidupkan kembali janji yang dibuat antara I Kala Sunya
-              dan Ida Hyang Pasupati. Kisah Ketewel adalah pengingat abadi bahwa
-              harmoni bukanlah sesuatu yang statis, melainkan sesuatu yang harus
-              terus-menerus dijaga dengan tulus melalui tapa, yasa, lan
-              kerthi—pengorbanan, pengabdian, dan perbuatan suci.
-            </p>
-          </div>
         </div>
       </div>
     </div>
