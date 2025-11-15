@@ -8,15 +8,21 @@ export default function Page() {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const PAGE_SIZE = 10;
 
   const handleOpenFile = (fileUrl) => {
     window.open(fileUrl, '_blank');
   };
 
-  const fetchReports = async (search = "") => {
+  const fetchReports = async (search = "", page = 1) => {
     setLoading(true);
     try {
-      const response = await FinancialService.fetchFinanceReport(1, 10, search);
+      const response = await FinancialService.fetchFinanceReport(page, PAGE_SIZE, search);
+      console.log("API Response:", response); // Debug
+      
       const transformedData = (response.data || []).map(report => ({
         nama: report.title,
         tahun: report.year.toString(),
@@ -27,23 +33,42 @@ export default function Page() {
         },
         file: report.file
       }));
+      
       setReports(transformedData);
+      
+      // Calculate totalPages dari berbagai kemungkinan response structure
+      let total = response.total || response.pagination?.total || response.meta?.total || 0;
+      
+      // Jika total masih 0, gunakan panjang data sebagai indikator
+      if (total === 0 && transformedData.length > 0) {
+        total = transformedData.length === PAGE_SIZE ? PAGE_SIZE * page + PAGE_SIZE : transformedData.length + (PAGE_SIZE * (page - 1));
+      }
+      
+      setTotalData(total);
+      setTotalPages(Math.max(1, Math.ceil(total / PAGE_SIZE)));
+      setCurrentPage(page);
     } catch (error) {
       console.error("Error fetching reports:", error);
       setReports([]);
+      setTotalPages(1);
+      setTotalData(0);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchReports();
+    fetchReports("", 1);
   }, []);
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
-      fetchReports(searchTerm);
+      fetchReports(searchTerm, 1);
     }
+  };
+
+  const handlePageChange = (page) => {
+    fetchReports(searchTerm, page);
   };
 
   const columns = [
@@ -56,7 +81,7 @@ export default function Page() {
   return (
     <Table
       title="Laporan Keuangan"
-      subtitle={`Inventaris · ${reports.length} Data · Aset Desa`}
+      subtitle={`Inventaris · ${totalData} Data · Aset Desa`}
       searchPlaceholder="Cari laporan keuangan..."
       data={reports}
       columns={columns}
@@ -64,6 +89,9 @@ export default function Page() {
       searchTerm={searchTerm}
       onSearchChange={setSearchTerm}
       onSearchKeyDown={handleSearch}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={handlePageChange}
     />
   );
 }

@@ -20,6 +20,7 @@ export default function page() {
     try {
       setLoading(true)
       const result = await PembangunanService.getDevelopmentPlanById(params.id)
+      console.log("API Response Detail:", result)
       setDetail(result.data)
     } catch (error) {
       console.error("Error:", error)
@@ -96,12 +97,12 @@ export default function page() {
               />
               <DetailCard
                 label="Tanggal Mulai"
-                value={PembangunanService.formatDate(detail.start_date)}
+                value={detail.start_date}
                 icon="📅"
               />
               <DetailCard
                 label="Tanggal Selesai"
-                value={PembangunanService.formatDate(detail.end_date)}
+                value={detail.end_date}
                 icon="✓"
               />
 

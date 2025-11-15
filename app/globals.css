@@ -18,6 +18,12 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+#BgSejarah{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("/bgSejarah.png");
+}
+
 #bgTable {
   background-repeat: no-repeat;
   background-size: cover;
