@@ -35,7 +35,7 @@ export const PembangunanService = {
     return items.map((item) => ({
       id: item.id,
       regulasi: item.name,
-      tahun: item.start_date ? new Date(item.start_date).getFullYear() : '-',
+      tahun: item.start_date || '-',
       alamat: item.address || '-',
       sumber_dana: item.funding_source || '-',
       anggaran: item.budget ? new Intl.NumberFormat("id-ID").format(Math.round(item.budget)) : '0',

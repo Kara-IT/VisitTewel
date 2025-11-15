@@ -1,7 +1,6 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useState } from "react";
 
 export default function Table({
   title = "Data",
@@ -11,19 +10,15 @@ export default function Table({
   columns = [],
   loading = false,
   onActionClick = null,
+  searchTerm = "",
+  onSearchChange = () => {},
+  onSearchKeyDown = () => {},
+  onClearSearch = () => {},
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredData = data.filter((row) =>
-    columns.some((col) =>
-      String(row[col.key]).toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 lg:px-10 mt-28 lg:mt-38">
-        <h1 className="text-center font-medium text-2xl lg:text-3xl text-primary">
+        <h1 className="text-center font-semibold text-3xl lg:text-4xl text-primary">
           {title}
         </h1>
         <p className="text-center lg:text-base text-sm text-gray-500 mt-2">
@@ -35,19 +30,30 @@ export default function Table({
             type="text"
             placeholder={searchPlaceholder}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => onSearchChange(e.target.value)}
+            onKeyDown={onSearchKeyDown}
             className="input w-full border-gray-200 focus-within:shadow-none focus-within:outline-none pl-10"
           />
         </div>
         <div className="mt-4 overflow-x-auto">
           {loading ? (
-            <div className="text-center py-8">
+            <div className="text-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
               <p className="mt-4 text-gray-600">Loading...</p>
             </div>
-          ) : filteredData.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              Tidak ada data ditemukan
+          ) : data.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg mb-4">
+                {searchTerm ? `Tidak ada hasil pencarian untuk "${searchTerm}"` : "Tidak ada data"}
+              </p>
+              {searchTerm && (
+                <button
+                  onClick={onClearSearch}
+                  className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
+                >
+                  Hapus Filter Pencarian
+                </button>
+              )}
             </div>
           ) : (
             <table className="table w-full border border-gray-200">
@@ -64,14 +70,14 @@ export default function Table({
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredData.map((row, index) => (
+                {data.map((row, index) => (
                   <tr key={index} className="hover:bg-gray-50">
                     {columns.map((column, colIndex) => (
                       <td
                         key={colIndex}
                         className={`px-6 py-4 border-r border-gray-200 text-sm ${
                           column.key === "action"
-                            ? "text-primary font-medium"
+                            ? "text-primary underline whitespace-nowrap font-medium"
                             : column.key === "deskripsi" ||
                               column.key === "keterangan"
                             ? "text-gray-500 max-w-[500px]"

@@ -24,7 +24,7 @@ export default function page() {
     <div className="pt-32">
       <div className="container mx-auto px-6 lg:px-0 mb-20">
         <div className="mt-10 text-center border-b border-gray-300 pb-10">
-          <h1 className="text-3xl font-medium text-primary">Kabar Ketewel</h1>
+          <h1 className="text-3xl lg:text-4xl font-semibold text-primary">Kabar Ketewel</h1>
           <p className="font-light">{blogs.length} Data</p>
         </div>
         <div className="mt-10">

@@ -71,7 +71,7 @@ export default function page() {
     <div className='min-h-screen'>
       <div className='container mx-auto px-4 pt-24 md:pt-40 pb-12 md:pb-24'>
         <div className='text-center mb-8 md:mb-12'>
-          <h1 className='text-2xl md:text-4xl font-bold text-gray-800 mb-2'>
+          <h1 className='text-2xl md:text-4xl font-semibold text-primary mb-2'>
             Struktur Prajuru
           </h1>
           <p className='text-sm md:text-base text-gray-600'>Desa Adat Ketewel</p>

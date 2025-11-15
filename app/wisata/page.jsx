@@ -39,8 +39,8 @@ export default function WisataList() {
     <div className="min-h-screen">
       <div className="mt-28 pb-16 lg:mt-40 container mx-auto px-4 lg:px-10">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-3xl lg:text-4xl font-bold text-primary mb-2">
+        <div className="mb-12 text-center">
+          <h1 className="text-3xl lg:text-4xl font-semibold text-primary mb-2">
             Semua Destinasi Wisata
           </h1>
           <p className="text-gray-600 text-lg">

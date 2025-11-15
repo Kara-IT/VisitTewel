@@ -6,33 +6,42 @@ import AchievementService from "../Service/AchievementService";
 export default function Page() {
   const [achievements, setAchievements] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleOpenFile = (fileUrl) => {
     window.open(fileUrl, "_blank");
   };
 
-  useEffect(() => {
-    const fetchAchievements = async () => {
-      try {
-        const response = await AchievementService.fetchAchievements(1, 10);
-        const transformedData = response.data.map((achievement) => ({
-          nama: achievement.title,
-          tanggal: achievement.achieved_on.split('-').reverse().join('-'),
-          action: {
-            text: "Lihat",
-            onClick: () => handleOpenFile(achievement.file),
-          },
-        }));
-        setAchievements(transformedData);
-      } catch (error) {
-        console.error("Error fetching achievements:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchAchievements = async (search = "") => {
+    setLoading(true);
+    try {
+      const response = await AchievementService.fetchAchievements(1, 10, search);
+      const transformedData = (response.data || []).map((achievement) => ({
+        nama: achievement.title,
+        tanggal: achievement.achieved_on.split('-').reverse().join('-'),
+        action: {
+          text: "Lihat",
+          onClick: () => handleOpenFile(achievement.file),
+        },
+      }));
+      setAchievements(transformedData);
+    } catch (error) {
+      console.error("Error fetching achievements:", error);
+      setAchievements([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchAchievements();
   }, []);
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      fetchAchievements(searchTerm);
+    }
+  };
 
   const columns = [
     { header: "Nama Prestasi", key: "nama" },
@@ -48,6 +57,9 @@ export default function Page() {
       data={achievements}
       columns={columns}
       loading={loading}
+      searchTerm={searchTerm}
+      onSearchChange={setSearchTerm}
+      onSearchKeyDown={handleSearch}
     />
   );
 }

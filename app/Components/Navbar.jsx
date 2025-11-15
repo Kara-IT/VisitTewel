@@ -53,7 +53,7 @@ export default function Navbar() {
           href: "/Perpustakaan-Digital",
         },
         { title: "Prestasi", href: "/Prestasi" },
-        { title: "BUBDA", href: "/layanan-informasi/bubda" },
+        // { title: "BUBDA", href: "/layanan-informasi/bubda" },
       ],
     },
   ];

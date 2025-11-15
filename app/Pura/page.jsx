@@ -45,8 +45,8 @@ export default function page() {
         <div className="min-h-screen">
             <div className="mt-28 pb-16 lg:mt-40 container mx-auto px-4 lg:px-10">
                 {/* Header */}
-                <div className="mb-12">
-                    <h1 className="text-3xl lg:text-4xl font-bold text-primary mb-2">
+                <div className="mb-12 text-center">
+                    <h1 className="text-3xl lg:text-4xl font-semibold text-primary mb-2">
                         Pura & Tempat Suci
                     </h1>
                     <p className="text-gray-600 text-lg">
@@ -70,7 +70,7 @@ export default function page() {
                                 <div className="flex items-start gap-4 p-6">
 
                                     <div className="flex-1 min-w-0">
-                                        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                                        <h2 className="text-2xl font-semibold text-primary mb-2">
                                             {info.title}
                                         </h2>
 
@@ -110,7 +110,7 @@ export default function page() {
 
                 {/* Info Section */}
                 <div className="mt-12 bg-white rounded-lg shadow p-8">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                    <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                         Tentang Pura di Desa Ketewel
                     </h3>
                     <p className="text-gray-600 leading-relaxed">

@@ -18,6 +18,13 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+#bgTable {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: url("/batik.png");
+}
+
 #bgHero {
   background-repeat: no-repeat;
   background-size: cover;
