@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Table from "../Components/Table";
+import PdfViewer from "../Components/PdfViewer";
 import RegulationService from "../Service/RegulationService";
 
 export default function Page() {
@@ -10,10 +11,15 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalData, setTotalData] = useState(0);
+  const [selectedRegulation, setSelectedRegulation] = useState(null);
   const PAGE_SIZE = 10;
 
-  const handleOpenFile = (fileUrl) => {
-    window.open(fileUrl, "_blank");
+  const handleOpenPdf = (regulation) => {
+    setSelectedRegulation(regulation);
+  };
+
+  const handleClosePdf = () => {
+    setSelectedRegulation(null);
   };
 
   const fetchRegulations = async (search = "", page = 1) => {
@@ -32,7 +38,10 @@ export default function Page() {
         nomor: regulation.regulation_number,
         action: {
           text: "Lihat",
-          onClick: () => handleOpenFile(regulation.file),
+          onClick: () => handleOpenPdf({
+            title: regulation.title,
+            file: regulation.file
+          }),
         },
       }));
 
@@ -81,19 +90,24 @@ export default function Page() {
   ];
 
   return (
-    <Table
-      title="Regulasi Desa"
-      subtitle={`Peraturan · ${totalData} Data · Kebijakan Desa`}
-      searchPlaceholder="Cari regulasi desa..."
-      data={regulations}
-      columns={columns}
-      loading={loading}
-      searchTerm={searchTerm}
-      onSearchChange={setSearchTerm}
-      onSearchKeyDown={handleSearch}
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={handlePageChange}
-    />
+    <>
+      <Table
+        title="Regulasi Desa"
+        subtitle={`Peraturan · ${totalData} Data · Kebijakan Desa`}
+        searchPlaceholder="Cari regulasi desa..."
+        data={regulations}
+        columns={columns}
+        loading={loading}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        onSearchKeyDown={handleSearch}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+      {selectedRegulation && (
+        <PdfViewer book={selectedRegulation} onClose={handleClosePdf} />
+      )}
+    </>
   );
 }

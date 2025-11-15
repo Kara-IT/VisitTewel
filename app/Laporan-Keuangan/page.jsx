@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Table from "../Components/Table";
+import PdfViewer from "../Components/PdfViewer";
 import FinancialService from "../Service/FinancialService";
 
 export default function Page() {
@@ -11,10 +12,15 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalData, setTotalData] = useState(0);
+  const [selectedReport, setSelectedReport] = useState(null);
   const PAGE_SIZE = 10;
 
-  const handleOpenFile = (fileUrl) => {
-    window.open(fileUrl, '_blank');
+  const handleOpenPdf = (report) => {
+    setSelectedReport(report);
+  };
+
+  const handleClosePdf = () => {
+    setSelectedReport(null);
   };
 
   const fetchReports = async (search = "", page = 1) => {
@@ -29,7 +35,10 @@ export default function Page() {
         deskripsi: report.description,
         action: {
           text: "Lihat Detail",
-          onClick: () => handleOpenFile(report.file)
+          onClick: () => handleOpenPdf({
+            title: report.title,
+            file: report.file
+          })
         },
         file: report.file
       }));
@@ -79,19 +88,24 @@ export default function Page() {
   ];
 
   return (
-    <Table
-      title="Laporan Keuangan"
-      subtitle={`Inventaris · ${totalData} Data · Aset Desa`}
-      searchPlaceholder="Cari laporan keuangan..."
-      data={reports}
-      columns={columns}
-      loading={loading}
-      searchTerm={searchTerm}
-      onSearchChange={setSearchTerm}
-      onSearchKeyDown={handleSearch}
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={handlePageChange}
-    />
+    <>
+      <Table
+        title="Laporan Keuangan"
+        subtitle={`Inventaris · ${totalData} Data · Aset Desa`}
+        searchPlaceholder="Cari laporan keuangan..."
+        data={reports}
+        columns={columns}
+        loading={loading}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        onSearchKeyDown={handleSearch}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+      {selectedReport && (
+        <PdfViewer book={selectedReport} onClose={handleClosePdf} />
+      )}
+    </>
   );
 }
