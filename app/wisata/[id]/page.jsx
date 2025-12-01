@@ -1,7 +1,7 @@
 "use client";
 import { getVillageInfoById } from "@/app/Service/TourismService";
 import { useEffect, useState, use } from "react";
-import { MapPin, Calendar, ArrowLeft } from "lucide-react";
+import { MapPin, Calendar, ArrowLeft, Play } from "lucide-react";
 import Link from "next/link";
 
 export default function WisataDetail({ params }) {
@@ -15,6 +15,7 @@ export default function WisataDetail({ params }) {
       try {
         setLoading(true);
         const data = await getVillageInfoById(id);
+        console.log("Fetched wisata detail:", data);
         if (data?.data) {
           setWisata(data.data);
           setError(null);
@@ -90,7 +91,7 @@ export default function WisataDetail({ params }) {
                 <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
                   {wisata.title}
                 </h1>
-                
+
                 {/* Badges */}
                 <div className="flex flex-wrap gap-3">
                   <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
@@ -115,8 +116,48 @@ export default function WisataDetail({ params }) {
 
               {/* Description */}
               {wisata.description && (
-                <div className="prose prose-lg max-w-none text-gray-700 [&_p]:mb-4 [&_strong]:text-gray-900 [&_a]:text-primary [&_a]:hover:underline">
+                <div className="prose prose-lg max-w-none text-gray-700 [&_p]:mb-4 [&_strong]:text-gray-900 [&_a]:text-primary [&_a]:hover:underline mb-12">
                   <div dangerouslySetInnerHTML={{ __html: wisata.description }} />
+                </div>
+              )}
+
+              {/* Video Section */}
+              {wisata.content_link && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <Play size={24} className="text-primary" />
+                    Pengenalan Wisata
+                  </h2>
+
+                  <div className="bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+                    {wisata.content_link.includes('youtube.com') || wisata.content_link.includes('youtu.be') ? (
+                      <iframe
+                        width="100%"
+                        height="450"
+                        src={wisata.content_link.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
+                        title={wisata.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full"
+                      ></iframe>
+                    ) : (
+                      <div className="flex items-center justify-center h-[450px] bg-gray-200">
+                        <div className="text-center">
+
+                          <a
+                            href={wisata.content_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
+                          >
+                            <Play size={16} />
+                            Buka Pengenalan Wisata
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>

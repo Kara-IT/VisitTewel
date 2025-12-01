@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Table from "../Components/Table";
+import PdfViewer from "../Components/PdfViewer";
 import AchievementService from "../Service/AchievementService";
 
 export default function Page() {
@@ -10,10 +11,15 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalData, setTotalData] = useState(0);
+  const [selectedAchievement, setSelectedAchievement] = useState(null);
   const PAGE_SIZE = 10;
 
-  const handleOpenFile = (fileUrl) => {
-    window.open(fileUrl, "_blank");
+  const handleOpenPdf = (achievement) => {
+    setSelectedAchievement(achievement);
+  };
+
+  const handleClosePdf = () => {
+    setSelectedAchievement(null);
   };
 
   const fetchAchievements = async (search = "", page = 1) => {
@@ -27,7 +33,10 @@ export default function Page() {
         tanggal: achievement.achieved_on.split('-').reverse().join('-'),
         action: {
           text: "Lihat",
-          onClick: () => handleOpenFile(achievement.file),
+          onClick: () => handleOpenPdf({
+            title: achievement.title,
+            file: achievement.file
+          }),
         },
       }));
 
@@ -75,19 +84,24 @@ export default function Page() {
   ];
 
   return (
-    <Table
-      title="Prestasi"
-      subtitle={`Prestasi · ${totalData} Data · Pencapaian Desa`}
-      searchPlaceholder="Cari prestasi..."
-      data={achievements}
-      columns={columns}
-      loading={loading}
-      searchTerm={searchTerm}
-      onSearchChange={setSearchTerm}
-      onSearchKeyDown={handleSearch}
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={handlePageChange}
-    />
+    <>
+      <Table
+        title="Prestasi"
+        subtitle={`Prestasi · ${totalData} Data · Pencapaian Desa`}
+        searchPlaceholder="Cari prestasi..."
+        data={achievements}
+        columns={columns}
+        loading={loading}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        onSearchKeyDown={handleSearch}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+      {selectedAchievement && (
+        <PdfViewer book={selectedAchievement} onClose={handleClosePdf} />
+      )}
+    </>
   );
 }

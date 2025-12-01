@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Table from "../Components/Table";
+import PdfViewer from "../Components/PdfViewer";
 import VillagePlanningService from "../Service/VillagePlanningService";
 
 export default function Page() {
@@ -10,10 +11,15 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalData, setTotalData] = useState(0);
+  const [selectedPlanning, setSelectedPlanning] = useState(null);
   const PAGE_SIZE = 10;
 
-  const handleOpenFile = (fileUrl) => {
-    window.open(fileUrl, "_blank");
+  const handleOpenPdf = (planning) => {
+    setSelectedPlanning(planning);
+  };
+
+  const handleClosePdf = () => {
+    setSelectedPlanning(null);
   };
 
   const fetchPlannings = async (search = "", page = 1) => {
@@ -28,7 +34,10 @@ export default function Page() {
         deskripsi: planning.description,
         action: {
           text: "Lihat Detail",
-          onClick: () => handleOpenFile(planning.file),
+          onClick: () => handleOpenPdf({
+            title: planning.name,
+            file: planning.file
+          }),
         },
       }));
 
@@ -77,19 +86,24 @@ export default function Page() {
   ];
 
   return (
-    <Table
-      title="Perencanaan Desa"
-      subtitle={`Rencana · ${totalData} Data · Program Desa`}
-      searchPlaceholder="Cari rencana pembangunan..."
-      data={plannings}
-      columns={columns}
-      loading={loading}
-      searchTerm={searchTerm}
-      onSearchChange={setSearchTerm}
-      onSearchKeyDown={handleSearch}
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={handlePageChange}
-    />
+    <>
+      <Table
+        title="Perencanaan Desa"
+        subtitle={`Rencana · ${totalData} Data · Program Desa`}
+        searchPlaceholder="Cari rencana pembangunan..."
+        data={plannings}
+        columns={columns}
+        loading={loading}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        onSearchKeyDown={handleSearch}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+      {selectedPlanning && (
+        <PdfViewer book={selectedPlanning} onClose={handleClosePdf} />
+      )}
+    </>
   );
 }
