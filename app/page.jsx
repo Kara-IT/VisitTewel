@@ -40,7 +40,7 @@ export default function Home() {
                 digital yang mudah diakses.
               </p>
               <Link
-                href="/tentang-desa/sejarah"
+                href="/TentangDesa/Sejarah"
                 className=" gap-4 flex lg:text-base text-sm items-center mt-8"
               >
                 Jelajahi Desa <MoveRight className="size-5" />
