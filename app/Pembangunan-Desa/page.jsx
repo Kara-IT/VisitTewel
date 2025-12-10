@@ -8,6 +8,7 @@ export default function page() {
   const router = useRouter();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -21,27 +22,27 @@ export default function page() {
   const fetchDevelopmentPlans = async (search = "", page = 1) => {
     try {
       setLoading(true);
+      setError(null);
       const result = await PembangunanService.getAllDevelopmentPlans(page, PAGE_SIZE, search);
-      console.log("API Response:", result);
 
-      if (result.data && Array.isArray(result.data)) {
-        const formattedData = PembangunanService.formatDataForTable(result.data);
-        setData(formattedData);
-
-        // Calculate totalPages dari berbagai kemungkinan response structure
-        let total = result.total || result.pagination?.total || result.meta?.total || 0;
-
-        // Jika total masih 0, gunakan panjang data sebagai indikator
-        if (total === 0 && formattedData.length > 0) {
-          total = formattedData.length === PAGE_SIZE ? PAGE_SIZE * page + PAGE_SIZE : formattedData.length + (PAGE_SIZE * (page - 1));
-        }
-
-        setTotalData(total);
-        setTotalPages(Math.max(1, Math.ceil(total / PAGE_SIZE)));
-        setCurrentPage(page);
+      if (!result?.data || result.data.length === 0) {
+        throw new Error("Gagal memuat data pembangunan desa");
       }
+
+      const formattedData = PembangunanService.formatDataForTable(result.data);
+      setData(formattedData);
+
+      let total = result.total || result.pagination?.total || result.meta?.total || 0;
+      if (total === 0 && formattedData.length > 0) {
+        total = formattedData.length === PAGE_SIZE ? PAGE_SIZE * page + PAGE_SIZE : formattedData.length + (PAGE_SIZE * (page - 1));
+      }
+
+      setTotalData(total);
+      setTotalPages(Math.max(1, Math.ceil(total / PAGE_SIZE)));
+      setCurrentPage(page);
     } catch (error) {
       console.error("Error:", error);
+      setError(error?.message || "Gagal mengambil data pembangunan desa");
       setData([]);
       setTotalPages(1);
       setTotalData(0);
@@ -89,6 +90,7 @@ export default function page() {
         data={data}
         columns={columns}
         loading={loading}
+        error={error}
         onActionClick={handleActionClick}
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}

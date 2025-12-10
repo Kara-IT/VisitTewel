@@ -7,6 +7,7 @@ import VillagePlanningService from "../Service/VillagePlanningService";
 export default function Page() {
   const [plannings, setPlannings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -26,9 +27,12 @@ export default function Page() {
     setLoading(true);
     try {
       const response = await VillagePlanningService.fetchVillagePlannings(page, PAGE_SIZE, search);
-      console.log("API Response:", response);
 
-      const transformedData = (response.data || []).map((planning) => ({
+      if (!response?.data || response.data.length === 0) {
+        throw new Error("Gagal memuat data perencanaan desa");
+      }
+
+      const transformedData = response.data.map((planning) => ({
         nama: planning.name,
         tahun: planning.planned_on.split('-').reverse()[0],
         deskripsi: planning.description,
@@ -43,10 +47,7 @@ export default function Page() {
 
       setPlannings(transformedData);
 
-      // Calculate totalPages dari berbagai kemungkinan response structure
       let total = response.total || response.pagination?.total || response.meta?.total || 0;
-
-      // Jika total masih 0, gunakan panjang data sebagai indikator
       if (total === 0 && transformedData.length > 0) {
         total = transformedData.length === PAGE_SIZE ? PAGE_SIZE * page + PAGE_SIZE : transformedData.length + (PAGE_SIZE * (page - 1));
       }
@@ -54,8 +55,10 @@ export default function Page() {
       setTotalData(total);
       setTotalPages(Math.max(1, Math.ceil(total / PAGE_SIZE)));
       setCurrentPage(page);
+      setError(null);
     } catch (error) {
       console.error("Error fetching plannings:", error);
+      setError(error?.message || "Gagal mengambil data perencanaan desa");
       setPlannings([]);
       setTotalPages(1);
       setTotalData(0);
@@ -94,6 +97,7 @@ export default function Page() {
         data={plannings}
         columns={columns}
         loading={loading}
+        error={error}
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
         onSearchKeyDown={handleSearch}

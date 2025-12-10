@@ -14,31 +14,44 @@ export default function PerpustakaanDigital() {
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedBook, setSelectedBook] = useState(null);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        const data = await getDigitalBooks(page, 12, search);
-        if (data?.data) {
-          setBooks(data.data);
-          setTotalPages(data.pagination?.total_pages || 1);
-        }
-      } catch (error) {
-        console.error("Error fetching books:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBooks();
+    fetchBooks(page, search);
   }, [page, search]);
+
+  const fetchBooks = async (currentPage, searchTerm) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getDigitalBooks(currentPage, 12, searchTerm);
+
+      if (!data?.data || data.data.length === 0) {
+        throw new Error("Gagal memuat buku digital");
+      }
+
+      setBooks(data.data);
+      setTotalPages(data.pagination?.total_pages || 1);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+      setError(error?.message || "Gagal mengambil data buku digital");
+      setBooks([]);
+      setTotalPages(1);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
     setPage(1);
     setSearch(searchInput);
+  };
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
   };
 
   const formatDate = (year, month, day) => {
@@ -68,25 +81,6 @@ export default function PerpustakaanDigital() {
           </p>
         </div>
 
-        {/* Search Bar
-        <form onSubmit={handleSearch} className="mb-12">
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="Cari judul buku..."
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-            <button
-              type="submit"
-              className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
-            >
-              Cari
-            </button>
-          </div>
-        </form> */}
-
         {/* Loading State */}
         {loading ? (
           <div className="flex items-center justify-center py-16">
@@ -94,6 +88,16 @@ export default function PerpustakaanDigital() {
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
               <p className="mt-4 text-gray-600">Memuat buku digital...</p>
             </div>
+          </div>
+        ) : error ? (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <p className="text-red-600 mb-3">Error: {error}</p>
+            <button
+              onClick={() => fetchBooks(page, search)}
+              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-sm font-medium"
+            >
+              Coba Lagi
+            </button>
           </div>
         ) : books.length > 0 ? (
           <>
@@ -154,7 +158,7 @@ export default function PerpustakaanDigital() {
             {totalPages > 1 && (
               <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
                 <button
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  onClick={() => handlePageChange(Math.max(1, page - 1))}
                   disabled={page === 1}
                   className="w-full sm:w-auto px-4 sm:px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium text-sm sm:text-base"
                 >
@@ -167,7 +171,7 @@ export default function PerpustakaanDigital() {
                 </span>
 
                 <button
-                  onClick={() => setPage((p) => p + 1)}
+                  onClick={() => handlePageChange(page + 1)}
                   disabled={page >= totalPages}
                   className="w-full sm:w-auto px-4 sm:px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium text-sm sm:text-base"
                 >

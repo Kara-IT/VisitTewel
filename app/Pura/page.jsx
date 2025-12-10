@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { MapPin, Calendar, Church } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import axios from 'axios'
 
 export default function page() {
@@ -17,14 +17,20 @@ export default function page() {
     async function fetchData() {
         try {
             setLoading(true)
+            setError(null)
             const response = await axios.get(
                 `${BaseURL}/infos/public?page=1&page_size=10&category=religi`
             )
+            
+            if (!response?.data?.data || response.data.data.length === 0) {
+                throw new Error("Gagal memuat data pura");
+            }
+            
             setInfos(response.data.data)
-            setError(null)
         } catch (err) {
             console.error("Error fetching pura data:", err)
-            setError("Gagal mengambil data pura")
+            setError(err?.message || "Gagal mengambil data pura")
+            setInfos([])
         } finally {
             setLoading(false)
         }
@@ -56,24 +62,28 @@ export default function page() {
 
                 {/* Error Message */}
                 {error && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-8">
-                        {error}
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                        <p className="text-red-700 mb-3">Error: {error}</p>
+                        <button
+                            onClick={fetchData}
+                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-sm font-medium"
+                        >
+                            Coba Lagi
+                        </button>
                     </div>
                 )}
 
                 {/* Content List */}
-                {infos.length > 0 ? (
+                {!error && infos.length > 0 ? (
                     <div className="space-y-6">
                         {infos.map((info) => (
-                            <div key={info.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+                          <div key={info.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
                                 {/* Card Header with Icon */}
                                 <div className="flex items-start gap-4 p-6">
-
                                     <div className="flex-1 min-w-0">
                                         <h2 className="text-2xl font-semibold text-primary mb-2">
                                             {info.title}
                                         </h2>
-
                                     </div>
                                 </div>
 
@@ -103,9 +113,11 @@ export default function page() {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-16">
-                        <p className="text-gray-600 text-lg">Tidak ada data pura ditemukan</p>
-                    </div>
+                    !error && (
+                        <div className="text-center py-16">
+                            <p className="text-gray-600 text-lg">Tidak ada data pura ditemukan</p>
+                        </div>
+                    )
                 )}
 
                 {/* Info Section */}

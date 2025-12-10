@@ -7,19 +7,32 @@ import Link from "next/link";
 
 export default function Wisata() {
   const [wisataData, setWisataData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getVillageInfos(1, 4);
-      if (data?.data) {
-        // Filter data: jika category religi, hanya tampilkan yang tourism_valid true
-        const filteredData = data.data.filter((item) => {
-          if (item.category?.toLowerCase() === "religi") {
-            return item.tourism_valid === true;
-          }
-          return true;
-        });
-        setWisataData(filteredData);
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await getVillageInfos(1, 4);
+        if (data?.data) {
+          // Filter data: jika category religi, hanya tampilkan yang tourism_valid true
+          const filteredData = data.data.filter((item) => {
+            if (item.category?.toLowerCase() === "religi") {
+              return item.tourism_valid === true;
+            }
+            return true;
+          });
+          setWisataData(filteredData);
+        } else {
+          setWisataData([]);
+        }
+      } catch (err) {
+        setError(err?.message || "Gagal mengambil data wisata");
+        setWisataData([]);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -27,7 +40,9 @@ export default function Wisata() {
 
   const scrollCarousel = (direction) => {
     const carousel = document.getElementById("carousel");
-    carousel.scrollBy({ left: direction * 400, behavior: "smooth" });
+    if (carousel) {
+      carousel.scrollBy({ left: direction * 400, behavior: "smooth" });
+    }
   };
 
   return (
@@ -60,30 +75,52 @@ export default function Wisata() {
           </div>
         </div>
 
-        <div
-          id="carousel"
-          className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {wisataData.map((item) => (
-            <Link
-              key={item.id}
-              href={`/wisata/${item.id}`}
-              className="flex-shrink-0 w-[560px]"
+        {loading && (
+          <div className="text-center py-8">
+            <p className="text-gray-500">Memuat data wisata...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <p className="text-red-600">Error: {error}</p>
+          </div>
+        )}
+
+        {!loading && !error && wisataData.length === 0 && (
+          <div className="text-center py-8">
+            <p className="text-gray-500">Tidak ada data wisata tersedia</p>
+          </div>
+        )}
+
+        {!loading && wisataData.length > 0 && (
+          <>
+            <div
+              id="carousel"
+              className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              <Card
-                image={item.tourism_image}
-                category={item.category}
-                title={item.title}
-              />
-            </Link>
-          ))}
-        </div>
-        <div className="text-center lg:text-end mt-6">
-          <Link href="/wisata" className="text-primary">
-            Lihat Semua <MoveRight className="size-4 ml-1 inline-block" />
-          </Link>
-        </div>
+              {wisataData.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/wisata/${item.id}`}
+                  className="flex-shrink-0 w-[560px]"
+                >
+                  <Card
+                    image={item.tourism_image}
+                    category={item.category}
+                    title={item.title}
+                  />
+                </Link>
+              ))}
+            </div>
+            <div className="text-center lg:text-end mt-6">
+              <Link href="/wisata" className="text-primary">
+                Lihat Semua <MoveRight className="size-4 ml-1 inline-block" />
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
