@@ -24,9 +24,11 @@ export default function Tab() {
         response = await BlogService.fetchBlogs(1, 8, "pengumuman");
       }
       console.log(response);
-      setBlogs(response.data);
+      // ✅ Tambahkan check untuk memastikan response. data ada
+      setBlogs(response?. data || []);
     } catch (error) {
       console.error("Error fetching blogs:", error);
+      setBlogs([]); // ✅ Set ke array kosong saat error
     }
   }
 
@@ -43,7 +45,7 @@ export default function Tab() {
         />
         <div className="tab-content border-t border-t-base-300 pt-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {blogs.slice(0, 8).map((blog) => (
+            {(blogs || []).slice(0, 8).map((blog) => (
               <Card key={blog.id} id={blog.id} coverImage={blog.coverImage} title={blog.title} type={blog.type} />
             ))}
           </div>
@@ -62,8 +64,8 @@ export default function Tab() {
           onChange={() => setActiveTab("Berita")}
         />
         <div className="tab-content border-t border-t-base-300 bg-base-100 py-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {blogs.slice(0, 8).map((blog) => (
+          <div className="grid grid-cols-1 md: grid-cols-2 lg: grid-cols-4 gap-6">
+            {(blogs || []).slice(0, 8).map((blog) => (
               <Card key={blog.id} id={blog.id} coverImage={blog.coverImage} title={blog.title} type={blog.type} />
             ))}
           </div>
@@ -83,8 +85,8 @@ export default function Tab() {
         />
         <div className="tab-content border-t border-t-base-300 bg-base-100 py-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {blogs.slice(0, 8).map((blog) => (
-              <Card key={blog.id} id={blog.id} coverImage={blog.coverImage} title={blog.title} type={blog.type} />
+            {(blogs || []).slice(0, 8).map((blog) => (
+              <Card key={blog.id} id={blog.id} coverImage={blog.coverImage} title={blog.title} type={blog. type} />
             ))}
           </div>
           <div className="mt-8 text-center lg:text-end">
