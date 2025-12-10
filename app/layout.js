@@ -77,7 +77,6 @@ export default function RootLayout({ children }) {
         <meta name="language" content="Indonesian" />
         <meta name="revisit-after" content="7 days" />
         <link rel="canonical" href="https://visitketewel.com" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <meta property="og:locale" content="id_ID" />
       </head>
       <body>
