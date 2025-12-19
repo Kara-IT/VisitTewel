@@ -44,7 +44,7 @@ export default function Footer() {
                   desaadatketewel01@gmail.com
                 </a>
                 <a
-                  href="tel:+6203612974774"
+                  href="tel:+6285792558149"
                   className="text-sm  border-l-2 pl-2 text-blue-100 block"
                 >
                   +6285792558149
