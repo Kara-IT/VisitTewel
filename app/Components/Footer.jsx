@@ -7,7 +7,7 @@ export default function Footer() {
     "Demografi",
     "Prestasi",
     "Pura",
-    "BUBDA",
+    "BUPDA",
     "Perpustakaan",
     "Laporan",
     "Regulasi",
@@ -35,19 +35,19 @@ export default function Footer() {
 
               <div className="space-y-3">
                 <p className="text-sm border-l-2 pl-2 text-blue-100">
-                  Jl. Raya Ketewel, Kecamatan Sukawati, Kabupaten Gianyar
+                  Jln.Pura Margatiga, Br. Puseh, Ketewel, Sukawati, Gianyar - Bali
                 </p>
                 <a
                   href="mailto:desaketewel04@gmail.com"
                   className="text-sm  border-l-2 pl-2 text-blue-100 block"
                 >
-                  desaketewel04@gmail.com
+                  desaadatketewel01@gmail.com
                 </a>
                 <a
                   href="tel:+6203612974774"
                   className="text-sm  border-l-2 pl-2 text-blue-100 block"
                 >
-                  (0361) 297474
+                  +6285792558149
                 </a>
               </div>
             </div>
