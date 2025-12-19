@@ -39,16 +39,44 @@ export default function Footer() {
                 </p>
                 <a
                   href="mailto:desaketewel04@gmail.com"
-                  className="text-sm  border-l-2 pl-2 text-blue-100 block"
+                  className="text-sm border-l-2 pl-2 text-blue-100 block"
                 >
                   desaadatketewel01@gmail.com
                 </a>
                 <a
                   href="tel:+6285792558149"
-                  className="text-sm  border-l-2 pl-2 text-blue-100 block"
+                  className="text-sm border-l-2 pl-2 text-blue-100 block"
                 >
                   +6285792558149
                 </a>
+
+                {/* Social Links */}
+                <div className="pt-3 flex space-x-4">
+                  <a
+                    href="https://www.facebook.com/DesaAdatKetewel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-100 text-sm"
+                  >
+                    FB: DesaAdat Ketewel
+                  </a>
+                  <a
+                    href="https://www.instagram.com/Visit_Ketewel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-100 text-sm"
+                  >
+                    IG: Visit_Ketewel
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@visit_ketewel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-100 text-sm"
+                  >
+                    Tiktok: @visit_ketewel
+                  </a>
+                </div>
               </div>
             </div>
 
